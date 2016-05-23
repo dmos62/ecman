@@ -16,7 +16,8 @@
                  [reagent-utils "0.1.7"]
                  [secretary "1.2.3"]
                  [venantius/accountant "0.1.7"]
-                 [devcards "0.2.1-6"]])
+                 [devcards "0.2.1-6"]
+                 [keybind "2.0.0"]])
 
 (require '[adzerk.boot-cljs :refer [cljs]]
          '[pandeiro.boot-http :refer [serve]]

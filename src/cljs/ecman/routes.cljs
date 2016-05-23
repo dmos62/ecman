@@ -15,10 +15,3 @@
 (defn init! []
   (doseq [[path view] routes]
     (add-route path view)))
-
-;; (println "Loading routes")
-;; (secretary/defroute "/" []
-;;   (session/put! :current-page #'home-page))
-
-;; (secretary/defroute "/about" []
-;;   (session/put! :current-page #'about-page))

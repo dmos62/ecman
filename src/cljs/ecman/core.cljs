@@ -2,15 +2,11 @@
   (:require
    [ecman.routes :as routes]
    [ecman.views :as views]
+   [ecman.keys :as keys]
    [reagent.core :as r]
    [reagent.session :as session]
    [secretary.core :as secretary :include-macros]
    [accountant.core :as accountant]))
-
-
-(def board [:wall  :wall :wall
-            :start :path :exit
-            :wall  :wall :wall])
 
 
 (defn current-page []
