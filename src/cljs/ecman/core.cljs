@@ -2,7 +2,6 @@
   (:require
    [ecman.routes :as routes]
    [ecman.views :as views]
-   [ecman.keys :as keys]
    [reagent.core :as r]
    [reagent.session :as session]
    [secretary.core :as secretary :include-macros]

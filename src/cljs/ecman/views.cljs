@@ -1,7 +1,7 @@
 (ns ecman.views
   (:require
    [reagent.core :as r]
-   [keybind.core :as key]))
+   [ecman.player :as player]))
 
 
 (def state (r/atom {:board {:tiles [:wall  :wall :wall
@@ -10,32 +10,37 @@
                             :player {:row 0
                                      :col 1}}}))
 
-(defn move-player-forward []
-  (swap! state update-in [:board :player :row] inc))
-
-(defn gen-key []
-  (gensym "key-"))
-
-(def tile-color {:wall "black"
-                 :start "blue"
-                 :exit "orange"
-                 :path "white"})
+(def tile-params {:width 20
+                  :height 20
+                  :tile-colors {:wall "black"
+                                :start "blue"
+                                :exit "orange"
+                                :path "white"
+                                :player "yellow"}})
 
 (defn player-icon [location]
-  [:circle
-   {:cx (+ (* (:row location) 20) 10)
-    :cy (+ (* (:col location) 20) 10)
-    :r 10
-    :style {:fill "yellow"}}])
+  (let [width (:width tile-params)
+        radius (/ width 2)
+        colors (:tile-colors tile-params)]
+    [:circle
+     {:cx (+ (* (:row location) width) radius)
+      :cy (+ (* (:col location) width) radius)
+      :r radius
+      :style {:fill (:player colors)}}]))
 
 (defn tile-box [row col tile]
-  [:rect
-   {:key (gen-key)
-    :x (* 21 col)
-    :y (* 21 row)
-    :height 20
-    :width 20
-    :style {:fill (get tile-color tile)}}])
+  (let [width (:width tile-params)
+        height (:height tile-params)
+        colors (:tile-colors tile-params)]
+    [:rect
+     {:key (gensym "key-")
+      :x (* width col)
+      :y (* height row)
+      :height width
+      :width height
+      :style {:fill (get colors tile)
+              :stroke-width 1
+              :stroke "white"}}]))
 
 (defn svg-board [board]
   (let [rows (partition 3 (:tiles board))]
@@ -48,7 +53,4 @@
 (defn home-page []
   (svg-board (:board @state)))
 
-(defn fire-sequence []
-  (js/console.log "Sequence fired"))
-
-(key/bind! "ctrl-f" ::my-trigger move-player-forward)
+(player/init-moving! state)
