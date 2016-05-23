@@ -8,6 +8,11 @@
    [accountant.core :as accountant]))
 
 
+(def board [:wall  :wall :wall
+            :start :path :exit
+            :wall  :wall :wall])
+
+
 (defn current-page []
   [:div [(session/get :current-page)]])
 
@@ -24,7 +29,7 @@
 ;; Initialize app
 
 (enable-console-print!)
-(println "Enabled console print")
+
 (routes/init!)
 
 (defn mount-root []

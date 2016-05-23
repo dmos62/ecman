@@ -6,9 +6,7 @@
 (secretary/set-config! :prefix "#")
 
 (def routes
-  {"/" #(views/home-page)
-   "/about" #(views/about-page)
-   "/test" #(views/test-page)})
+  {"/" #(views/home-page)})
 
 (defn add-route [path view]
   (secretary/defroute (str path) []
