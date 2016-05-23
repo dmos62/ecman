@@ -3,14 +3,20 @@
    [reagent.core :as r]))
 
 
-(defonce state  (r/atom {:board [:wall  :wall :wall
-                                 :start :path :exit
-                                 :wall  :wall :wall]}))
+(def state (r/atom {:board {:tiles [:wall  :wall :wall
+                                    :start :path :exit
+                                    :wall  :wall :wall]
+                            :player [0 1]}}))
 
 (def tile-color {:wall "black"
                  :start "blue"
                  :exit "orange"
                  :path "white"})
+
+(defn player-icon [[row col]]
+  [:circle
+   {:cx (+ (* row 20) 10) :cy (+ (* col 20) 10) :r 10
+    :style {:fill "yellow"}}])
 
 (defn tile-box [row col tile]
   [:rect
@@ -21,11 +27,12 @@
     :style {:fill (get tile-color tile)}}])
 
 (defn svg-board [board]
-  (let [rows (partition 3 board)]
+  (let [rows (partition 3 (:tiles board))]
     [:svg {:x 0 :y 0 :width 500 :height 500}
      (for [[rix row] (map-indexed vector rows)
            [cix tile] (map-indexed vector row)]
-       (tile-box rix cix tile))]))
+       (tile-box rix cix tile))
+     (player-icon (:player board))]))
 
 (defn home-page []
   (svg-board (:board @state)))
