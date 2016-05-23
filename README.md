@@ -1,14 +1,8 @@
-# boot-start-cljs
-Simple project template for clojurescript with boot
+# Introduction
 
-# How to get started?
-Clone this repository and then run `./bootstrap`. This will ask your desired project name and replace all directories and namespaces with new name.
+Ecman is a simple game where the goal is to navigate through the maze using Emacs keybindings.
+Each level will get more difficult and requires player to use more effective keybindings. For example, instead of running forward by pressing down ``C-f`` player will learn to jump around with ``M-f`` etc. New combinations and keybindings can be unlocked by picking up points or badges on the way.The score for each level will be calculated based on number of keystrokes player used, points collected etc.
 
-After bootstrapping, you can delete bootstrap file and initialize new git repo.
+# How to start
 
-# What's included?
-This is a simple clojurescript project template using boot for runnin dev environment.
-
-Also, devcards is included, you can see your cards going to `http://localhost:3000/devcards.html`
-
-You can run tests using `boot run-tests` to run them once or `boot auto-test` to run tests every time file changes.
+Run `boot dev` inside the cloned ecman project and navigate to `localhost:3000`
