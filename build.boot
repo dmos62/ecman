@@ -14,7 +14,8 @@
                  [adzerk/boot-test            "1.0.6"]
                  [reagent "0.6.0-alpha"]
                  [reagent-utils "0.1.7"]
-                 [keybind "2.0.0"]])
+                 [keybind "2.0.0"]
+                 [re-frame "0.7.0"]])
 
 (require '[adzerk.boot-cljs :refer [cljs]]
          '[pandeiro.boot-http :refer [serve]]

@@ -1,2 +1,2 @@
-{:require  [ecman.core]
- :init-fns [ecman.core/mount-root]}
+{:require  [ecman.sample]
+ :init-fns [ecman.sample/mount-root]}
