@@ -1,19 +1,13 @@
 (ns ecman.views
   (:require
    [reagent.core :as r]
-   [ecman.player :as player]))
+   [re-frame.core :refer [subscribe]]))
 
-
-(def state (r/atom {:board {:tiles [:wall  :wall :wall
-                                    :start :path :exit
-                                    :wall  :wall :wall]
-                            :player {:row 0
-                                     :col 1}}}))
 
 (def tile-params {:width 20
                   :height 20
                   :tile-colors {:wall "black"
-                                :start "blue"
+                                :start "green"
                                 :exit "orange"
                                 :path "white"
                                 :player "yellow"}})
@@ -50,7 +44,10 @@
        (tile-box rix cix tile))
      (player-icon (:player board))]))
 
-(defn home-page []
-  (svg-board (:board @state)))
+(defn game-board []
+  (let [board (subscribe [:board-query])]
+    (fn board-render []
+      (svg-board @board))))
 
-(player/init-moving! state)
+(defn home-page []
+  [game-board])
