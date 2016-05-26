@@ -14,7 +14,6 @@
                  [adzerk/boot-test            "1.0.6"]
                  [reagent "0.6.0-alpha"]
                  [reagent-utils "0.1.7"]
-                 [devcards "0.2.1-6"]
                  [keybind "2.0.0"]])
 
 (require '[adzerk.boot-cljs :refer [cljs]]
@@ -31,7 +30,7 @@
    (watch)
    (reload)
    (cljs-repl)
-   (cljs :compiler-options {:devcards true})
+   (cljs)
    (serve :dir "target")
    (target :dir #{"target"})))
 

@@ -1,3 +1,0 @@
-{:require  [ecman-devcards.core]
- :compiler-options {:devcards true}
- :init-fns [ecman-devcards.core/main]}
