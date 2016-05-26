@@ -3,14 +3,14 @@
   (:require
    [ecman.views :as views]
    [ecman.handlers :as handlers]
+   [ecman.levels :as levels]
    [reagent.core :as r]
    [re-frame.core :refer [dispatch-sync]]))
 
 (enable-console-print!)
 
-(def initial-data {:board {:tiles [:wall  :wall :wall
-                                   :start :path :exit
-                                   :wall  :wall :wall]
+
+(def initial-data {:board {:level levels/level-1
                            :player {:row 0
                                     :col 1}}})
 
