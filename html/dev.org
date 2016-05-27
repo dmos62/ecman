@@ -1,0 +1,27 @@
+* Why boot and not lein
+
+I find boot more straightforward. I still have some scars from java days when I had to use maven. And leiningen feels the same. I just prefer imperative over declarative build systems. And boot is imperative in a sense that you can define your own tasks and control the build exactly as you want. In leiningen you just describe what you would like to happen, but in boot you tell it exactly what it should do.
+
+There are some drawbacks of course. Smaller community, fewer plugins, fewer templates(if any at all, haven't looked into this). That's one of the reasons why I don't use figwheel with boot yet. There might be a plugin for figwheel.
+
+Boot has hot reloading also, I fixed the errors that were causing it to fail. Not sure if it can hot reload css on the fly as figwheel is doing.
+
+Also, with figwheel/lein I had problems connecting to repl through my emacs. So I dropped it and started using boot. And cider has no problems with boot. When I do 'cider-jack-in' it runs boot in the background.
+
+** Boot features from github:
+
+ - Write executable, self-contained scripts in Clojure and run them with or without a project context.
+ - Dynamically add dependencies from Maven repositories to the running script's class path.
+ - Managed filesystem tree provides a scoped, immutable, append-only interface.
+ - Fine-grained control of classloader isolation–run code in separate Clojure runtimes.
+ - Tasks are functions that return middleware which compose to form build pipelines.
+ - Tasks are not coupled via hardcoded file paths or magical keys in a global configuration map.
+ - Create new, ad-hoc tasks easily in the project, in the build script, or in the REPL.
+ - Compose build pipelines in the project, in the build script, in the REPL, or on the command line.
+ - Artifacts can never be stale–there is no need for a clean task.
+
+Somewhat similar to gradle in my opinion.
+
+* Emacs setup
+
+I think I'm using quite standard setup. I use cider. When I need to connect to clojurescript REPL I execute 'cider-connect' command, choose localhost and then the nrepl port that boot has opened for me. When cider is connected I type '(start-repl)' to start the clojurescript repl and then 'C-c M-n' to switch to my current namespace.
