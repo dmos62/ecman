@@ -11,8 +11,9 @@
 
 
 (def initial-data {:board {:level levels/level-1
-                           :player {:row 0
-                                    :col 1}}})
+                           :player {:row 1
+                                    :col 0}}
+                   :level-active? true})
 
 (defn mount-root []
   (dispatch-sync [:initialize initial-data])

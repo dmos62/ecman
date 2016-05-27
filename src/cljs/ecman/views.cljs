@@ -17,12 +17,12 @@
         radius (/ width 2)
         colors (:tile-colors tile-params)]
     [:circle
-     {:cx (+ (* (:row location) width) radius)
-      :cy (+ (* (:col location) width) radius)
+     {:cy (+ (* (:row location) width) radius)
+      :cx (+ (* (:col location) width) radius)
       :r radius
       :style {:fill (:player colors)}}]))
 
-o(defn tile-box [{:keys [tile-type row col]} tile]
+(defn tile-box [{:keys [tile-type row col]} tile]
   (let [width (:width tile-params)
         height (:height tile-params)
         colors (:tile-colors tile-params)]
