@@ -3,7 +3,7 @@
   (:require [re-frame.core :refer [register-handler
                                    register-sub
                                    dispatch]]
-            [keybind.core :as keys]))
+            ))
 
 (register-handler
  :initialize

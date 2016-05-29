@@ -7,11 +7,9 @@
     [ecman.keyboard :as kb]
     [reagent.core :as r]
     [re-frame.core :refer [dispatch-sync]]
-    [keybind.core]
     ))
 
 (enable-console-print!)
-
 
 (def initial-data {:board {:level levels/level-1
                            :player {:row 1
