@@ -7,8 +7,9 @@
 
 (register-handler
  :initialize
- (fn [db [_ value]]
-   (merge db value)))
+ (fn [_ [_ init-state]]
+   (do (ecman.keyboard/initialize!))
+   init-state))
 
 (defn get-exit-tile [level]
   (first (filter #(= (:tile-type %) :exit) level)))
@@ -38,5 +39,3 @@
  :board-query
  (fn [db _]
    (reaction (:board @db))))
-
-(keys/bind! "ctrl-f" ::move-f #(dispatch [:player-move-f]))

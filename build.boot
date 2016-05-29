@@ -1,3 +1,5 @@
+; vim: ft=clojure
+
 (set-env!
  :source-paths #{"src/cljs"}
  :resource-paths #{"html"}
@@ -24,28 +26,28 @@
          '[crisptrutski.boot-cljs-test :refer [test-cljs]]
          '[adzerk.boot-test :refer :all])
 
-(task-options! test-cljs {:js-env :phantom})
+;(task-options! test-cljs {:js-env :phantom})
 
 (deftask dev []
   (comp
    (watch)
-   (reload)
-   (cljs-repl)
+   (reload :on-jsload 'ecman.core/reload-fn!)
+   ;(cljs-repl)
    (cljs)
    (serve :dir "target")
    (target :dir #{"target"})))
 
-(deftask testing []
-  (merge-env! :source-paths #{"test/cljs"})
-  identity)
+; (deftask testing []
+;   (merge-env! :source-paths #{"test/cljs"})
+;   identity)
 
-(deftask run-tests []
-  (comp (testing)
-        (test-cljs)
-        (test)))
+; (deftask run-tests []
+;   (comp (testing)
+;         (test-cljs)
+;         (test)))
 
-(deftask auto-test []
-  (comp (testing)
-        (watch)
-        (test-cljs)
-        (test)))
+; (deftask auto-test []
+;   (comp (testing)
+;         (watch)
+;         (test-cljs)
+;         (test)))

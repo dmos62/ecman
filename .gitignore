@@ -16,3 +16,6 @@ pom.xml
 .crossover-cljs
 .repl
 .nrepl-port
+.buffers.vim
+*.swp
+*.swo

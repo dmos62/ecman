@@ -1,11 +1,14 @@
 (ns ecman.core
   (:require-macros [reagent.ratom :refer [reaction]])
   (:require
-   [ecman.views :as views]
-   [ecman.handlers :as handlers]
-   [ecman.levels :as levels]
-   [reagent.core :as r]
-   [re-frame.core :refer [dispatch-sync]]))
+    [ecman.views :as views]
+    [ecman.handlers :as handlers]
+    [ecman.levels :as levels]
+    [ecman.keyboard :as kb]
+    [reagent.core :as r]
+    [re-frame.core :refer [dispatch-sync]]
+    [keybind.core]
+    ))
 
 (enable-console-print!)
 
@@ -15,6 +18,11 @@
                                     :col 0}}
                    :level-active? true})
 
-(defn mount-root []
+(defn render! []
+  (r/render [views/game-board] (.getElementById js/document "app")))
+
+(defn initialize! []
   (dispatch-sync [:initialize initial-data])
-  (r/render [views/home-page] (.getElementById js/document "app")))
+  (render!))
+
+(def reload-fn! render!)
