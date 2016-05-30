@@ -16,7 +16,6 @@
                  [adzerk/boot-test            "1.0.6"]
                  [reagent "0.6.0-alpha"]
                  [reagent-utils "0.1.7"]
-                 ;[keybind "2.0.0"]
                  [re-frame "0.7.0"]
                  [org.clojure/core.match "0.3.0-alpha4"]
                  ])
@@ -34,7 +33,7 @@
   (comp
    (watch)
    (reload :on-jsload 'ecman.core/reload-fn!)
-   ;(cljs-repl)
+   (cljs-repl)
    (cljs)
    (serve :dir "target")
    (target :dir #{"target"})))

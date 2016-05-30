@@ -1,7 +1,7 @@
 (ns ecman.views
   (:require
-   [reagent.core :as r]
-   [re-frame.core :refer [subscribe]]))
+   [reagent.ratom :as r]
+   [re-frame.core :refer [subscribe] :as rf]))
 
 (def tile-params {:width 40
                   :height 40
@@ -39,13 +39,20 @@
               :stroke-width 1
               :stroke "white"}}]))
 
+(rf/register-sub
+ :board-query
+ (fn [db _]
+   (r/reaction (:board @db))))
+
 (defn game-board []
-  (let [board (subscribe [:board-query])]
+  (let [board (rf/subscribe [:board-query])]
     (fn []
       (log "rendering game-board")
-      (let [board @board]
+      (let [board @board
+            level-ix (:level-ix board)
+            level (get-in board [:levels level-ix])]
         [:svg {:x 0 :y 0 :width 500 :height 500}
-         (for [tile (:level board)]
+         (for [tile level]
            ^{:key tile}
            [tile-box tile])
          [player-icon (:player board)]
