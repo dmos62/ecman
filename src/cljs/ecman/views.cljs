@@ -1,23 +1,21 @@
 (ns ecman.views
   (:require
    [reagent.ratom :as r]
-   [re-frame.core :refer [subscribe] :as rf]))
+   [re-frame.core :as rf]))
 
-(def tile-params {:width 40
-                  :height 40
-                  :tile-colors {:wall "grey"
-                                :start "green"
-                                :exit "orange"
-                                :path "white"
-                                :player "yellow"}})
-
-(defn log [s] (when false (println s)))
+(def tile-params
+  {:width 40
+   :height 40
+   :tile-colors {:wall "grey"
+                 :start "green"
+                 :exit "orange"
+                 :path "white"
+                 :player "yellow"}})
 
 (defn player-icon [location]
   (let [width (:width tile-params)
         radius (/ width 2)
         colors (:tile-colors tile-params)]
-    (log "rendering player-icon")
     [:circle
      {:cy (+ (* (:row location) width) radius)
       :cx (+ (* (:col location) width) radius)
@@ -28,8 +26,6 @@
   (let [width (:width tile-params)
         height (:height tile-params)
         colors (:tile-colors tile-params)]
-    (when (= [1 1] [row col])
-      (log "rendering tile at [1 1]."))
     [:rect
      {:x (* width col)
       :y (* height row)
@@ -47,7 +43,6 @@
 (defn game-board []
   (let [board (rf/subscribe [:board-query])]
     (fn []
-      (log "rendering game-board")
       (let [board @board
             level-ix (:level-ix board)
             level (get-in board [:levels level-ix])]

@@ -26,6 +26,7 @@
 (def modifier-code-names #{:SHIFT :CTRL :ALT})
 
 (defn make-key-press-handler [key-combo-matches?!]
+  ; key-combo-matches?! takes [db key-combo]
   ; key-combo-matches?! must return true if matches, and false if not.
   (fn [db [_ key-press]]
     (let [unchanged-db db
@@ -46,7 +47,7 @@
                 (:incomplete-key-combo unchanged-db)
                 vec
                 (conj key-press))]
-          (if (key-combo-matches?! key-combo) 
+          (if (key-combo-matches?! db key-combo) 
             cleared-combo
             (assoc unchanged-db :incomplete-key-combo key-combo)
             ))))))
