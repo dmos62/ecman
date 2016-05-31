@@ -3,6 +3,7 @@
   (:require [re-frame.core :refer [register-handler
                                    register-sub
                                    dispatch] :as rf]
+            [ecman.levels :as levels]
             ))
 
 (defn js-println [& args]
@@ -14,8 +15,14 @@
 (defn get-exit-tile [level]
   (first (filter #(= (:tile-type %) :exit) level)))
 
-(defn player-move-f [player]
-  (update-in player [:col] inc))
+(defn move [dir player]
+  (let [f #(update-in player [%1] %2)]
+    (case dir
+      :up (f :row dec)
+      :down (f :row inc)
+      :right (f :col inc)
+      :left (f :col dec)
+      )))
 
 (register-handler
  :end-game
@@ -60,29 +67,50 @@
     (= player (select-keys exit-tile [:row :col]))))
 
 (register-handler
-  :step-once
-  (fn [db _]
-    (js-println "You make one step.")
-    (if-not (:game-over db)
-      (let [moved-player (player-move-f (get-player db))]
-        (when (player-on-exit-tile? db moved-player)
-          (dispatch [:end-level]))
-        (assoc-in db [:board :player] moved-player))
-      db
-      )))
+  :move
+  (fn [db [_ & subevent]]
+    (when-not (:game-over db)
+      (dispatch (vec subevent)))
+    db
+    ))
 
 (defn teleport [player tile]
   (assoc player :row (:row tile) :col (:col tile)))
 
+(defn possible? [db player]
+  (let [{:keys [tile-type]} (levels/get-tile (get-level db) player)]
+    (case tile-type
+      (:wall nil) (do (js-println "Not possible.") nil)
+      true
+      )))
+
+(defn player-change! [db new-player]
+  (cond
+    (possible? db new-player)
+    (do
+      (when (player-on-exit-tile? db new-player)
+        (dispatch [:end-level]))
+      (assoc-in db [:board :player] new-player))
+    :else
+    db
+    ))
+
 (register-handler
-  :teleport-to
-  (fn [db [_ tile]]
-    (js-println "You've just teleported to end of line!")
-    (if-not (:game-over db)
-      (let [player (get-player db)
-            teleported (teleport player tile)]
-        (when (player-on-exit-tile? db teleported)
-          (dispatch [:end-level]))
-        (assoc-in db [:board :player] teleported))
-      db
+  :step-once
+  (fn [db [_ dir]]
+    (->>
+      (move dir (get-player db))
+      (player-change! db)
+      )))
+
+(register-handler
+  :move-max
+  (fn [db [_ dir]]
+    (->>
+      (loop [player (get-player db)]
+        (let [moved (move dir player)]
+          (if (possible? db moved)
+            (recur moved)
+            player)))
+      (player-change! db)
       )))

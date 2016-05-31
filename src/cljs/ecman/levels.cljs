@@ -3,6 +3,14 @@
 (defn tile [tile-type row col]
   {:tile-type tile-type :row row :col col})
 
+(defn same-coord? [tile-a tile-b]
+  (and
+    (= (:row tile-a) (:row tile-b))
+    (= (:col tile-a) (:col tile-b))))
+
+(defn get-tile [level player]
+  (first (filter #(same-coord? % player) level)))
+
 (def level-1
   [(tile :wall 0 0) (tile :wall 0 1) (tile :wall 0 2)
    (tile :start 1 0) (tile :path 1 1) (tile :exit 1 2)
